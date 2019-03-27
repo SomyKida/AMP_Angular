@@ -27,4 +27,10 @@ export class AuthService {
     var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
     return response;
   }
+
+  forgot(params) {
+    var url = this.constants.API_ENDPOINT + '/api/dentist/auth/login';
+    var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
+    return response;
+  }
 }
