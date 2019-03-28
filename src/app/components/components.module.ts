@@ -4,12 +4,14 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { OffersComponent } from './offers/offers.component';
 import { MaterialModule } from './material/material.module';
 import { AlertComponent } from './modals/alert/alert.component';
+import { FabComponent } from './fab/fab.component';
 
 @NgModule({
   declarations: [
     SideBarComponent,
     OffersComponent,
-    AlertComponent
+    AlertComponent,
+    FabComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { AlertComponent } from './modals/alert/alert.component';
   exports: [
     SideBarComponent,
     OffersComponent,
-    AlertComponent
+    AlertComponent,
+    FabComponent
   ],
   entryComponents: [AlertComponent]
 })
