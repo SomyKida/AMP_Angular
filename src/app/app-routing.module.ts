@@ -9,12 +9,16 @@ const routes: Routes = [
     loadChildren: './pages/auth/auth.module#AuthModule'
   },
   {
+    path: 'chat',
+    loadChildren: './pages/dash/chat/chat.module#ChatModule'
+  },
+  {
     path: 'login',
-    component: LoginComponent
+    loadChildren: './pages/auth/login/login.module#LoginModule'
   },
   {
     path: 'home',
-    component: HomeComponent
+    loadChildren: './pages/dash/home/home.module#HomeModule'
   },
   {
     path: '**',
@@ -23,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -5,13 +5,15 @@ import { OffersComponent } from './offers/offers.component';
 import { MaterialModule } from './material/material.module';
 import { AlertComponent } from './modals/alert/alert.component';
 import { FabComponent } from './fab/fab.component';
+import { AlitaComponent } from './alita/alita.component';
 
 @NgModule({
   declarations: [
     SideBarComponent,
     OffersComponent,
     AlertComponent,
-    FabComponent
+    FabComponent,
+    AlitaComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { FabComponent } from './fab/fab.component';
     SideBarComponent,
     OffersComponent,
     AlertComponent,
-    FabComponent
+    FabComponent,
+    AlitaComponent
   ],
   entryComponents: [AlertComponent]
 })

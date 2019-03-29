@@ -9,19 +9,14 @@ import { ComponentsModule } from './components/components.module';
 import { HttpFactory } from './services/httpInterceptor/httpFactory';
 import { AuthService } from './services/auth/auth.service';
 import { CredentialService } from './services/credentials/credential.service';
-import { LoginComponent } from './pages/auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material';
 import { MaterialModule } from './components/material/material.module';
-import { HomeComponent } from './pages/dash/home/home.component';
 import { AuxService } from './auxilaries/aux.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
