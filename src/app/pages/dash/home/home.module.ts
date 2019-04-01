@@ -17,8 +17,7 @@ import { MaterialModule } from 'src/app/components/material/material.module';
         component: HomeComponent
       }
     ]),
-    CommonModule,
-    MaterialModule
+    CommonModule
   ]
 })
 export class HomeModule { }

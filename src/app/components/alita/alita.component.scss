@@ -62,6 +62,12 @@
                     font-size: 16px;
                     color: $headingNormColor;
                 }
+
+                button {
+                    width: 50%;
+                    background: $blueTheme;
+                    color: #ffffff;
+                }
             }
 
 
@@ -82,7 +88,7 @@
                 overflow: scroll;
 
                 li {
-                    margin-bottom: 5px;
+                    margin-bottom: 10px;
 
                     .someone {
                         text-align: right;
@@ -104,6 +110,7 @@
                             margin-right: 5px;
                             border-radius: 5px;
                             color: #ffffff;
+                            max-width: 80%;
                         }
                     }
 
@@ -144,7 +151,6 @@
                     width: 20%;
                     background: $blueTheme;
                     color: #ffffff;
-
                 }
             }
         }

@@ -6,6 +6,8 @@ import { MaterialModule } from './material/material.module';
 import { AlertComponent } from './modals/alert/alert.component';
 import { FabComponent } from './fab/fab.component';
 import { AlitaComponent } from './alita/alita.component';
+import { ManualComponent } from './manual/manual.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,10 +15,12 @@ import { AlitaComponent } from './alita/alita.component';
     OffersComponent,
     AlertComponent,
     FabComponent,
-    AlitaComponent
+    AlitaComponent,
+    ManualComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MaterialModule
   ],
   exports: [
@@ -24,7 +28,8 @@ import { AlitaComponent } from './alita/alita.component';
     OffersComponent,
     AlertComponent,
     FabComponent,
-    AlitaComponent
+    AlitaComponent,
+    ManualComponent
   ],
   entryComponents: [AlertComponent]
 })

@@ -2,17 +2,18 @@
   <button class="logo" mat-button>
     <img src="assets/img/logo.png" alt="">
   </button>
-  <button class="options" mat-button>
+  <button class="options" (click)="goTo('dashboard')" mat-button>
     <img src="assets/img/settings.png" alt="">
-    <p>Dashboard</p>
+    <p [ngClass]="{'highlighted': currentPage == '/home'}">Dashboard</p>
   </button>
   <button class="options" mat-button>
     <img src="assets/img/scheduling.png" alt="">
     <p>Scheduling</p>
   </button>
-  <button class="options" mat-button>
-    <img src="assets/img/chat.png" alt="">
-    <p>Chat</p>
+  <button class="options" (click)="goTo('chat')" mat-button>
+    <img *ngIf="currentPage != '/chat'" src="assets/img/chat.png" alt="">
+    <img *ngIf="currentPage == '/chat'" src="assets/img/chatSelected.png" alt="">
+    <p [ngClass]="{'highlighted': currentPage == '/chat'}">Chat</p>
   </button>
   <button class="options" mat-button>
     <img src="assets/img/social.png" alt="">
@@ -34,8 +35,8 @@
     <img src="assets/img/support.png" alt="">
     <p>Support</p>
   </button>
-  <button class="options" (click)="login()" mat-button>
+  <button class="options" (click)="goTo('login')" mat-button>
     <img src="assets/img/refer.png" alt="">
-    <p>Login</p>
+    <p [ngClass]="{'highlighted': currentPage == '/login'}">Login</p>
   </button>
 </div>
