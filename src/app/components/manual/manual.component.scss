@@ -7,6 +7,7 @@
     padding: 5%;
     width: -webkit-fill-available;
     height: -webkit-fill-available;
+    overflow: scroll;
 
     .form-slide {
         background: $primary;
@@ -95,7 +96,7 @@
                 }
 
                 .blue-btn {
-                    background: #39d4ff;
+                    background: $blueTheme;
                     padding: 15px 50px;
                     font-size: 18px;
                     color: #fff;
@@ -110,6 +111,11 @@
                         width: auto;
                         font-size: 14px;
                     }
+                }
+
+                .add-doc {
+                    background: $blueTheme;
+                    color: #fff;
                 }
 
                 .mat-tab-group {
