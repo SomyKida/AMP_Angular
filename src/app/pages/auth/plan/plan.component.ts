@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuxService } from 'src/app/auxilaries/aux.service';
+import { MatDialog } from '@angular/material';
+import { ProDetailsComponent } from 'src/app/components/modals/pro-details/pro-details.component';
 
 @Component({
   selector: 'app-plan',
@@ -13,19 +15,28 @@ export class PlanComponent implements OnInit {
   selectedPlan: any = null;
   hasSignedUp: boolean = false;
   selectedTab: number = 0;
-  public user: { name: string, address: string, zipcode: string, email: string, phoneNo: string } = {
-    name: '',
-    address: '',
-    zipcode: '',
-    email: '',
-    phoneNo: ''
-  }
+  public userFromUrl = null;
+  public user:
+    {
+      name: string, address: string, zipcode: string,
+      email: string, phoneNo: string, pass: string, conPass: string
+    } = {
+      name: '',
+      address: '',
+      zipcode: '',
+      email: '',
+      phoneNo: '',
+      pass: '',
+      conPass: ''
+    }
   public userFldsVlds = {
     name: false,
     address: false,
     zipcode: false,
     email: false,
-    phoneNo: false
+    phoneNo: false,
+    pass: false,
+    conPass: false
   }
   public billing: { name: string, number: string, cvc: string, expiry: any } = {
     name: '',
@@ -41,9 +52,18 @@ export class PlanComponent implements OnInit {
   }
   constructor(public auth: AuthService,
     public aux: AuxService,
+    public extractor: ActivatedRoute,
     public router: Router) { }
 
   ngOnInit() {
+    this.userFromUrl = this.extractor.snapshot.paramMap.get('token');
+    if (this.userFromUrl) {
+      this.selectedPlan = {
+        message: 'User has already signed up, So no need to worry for plan'
+      }
+      this.hasSignedUp = true;
+      this.selectedTab = 1;
+    }
   }
 
   register(plan) {
@@ -61,6 +81,10 @@ export class PlanComponent implements OnInit {
       this.userFldsVlds.phoneNo = false;
     else if (field == 'zipcode')
       this.userFldsVlds.zipcode = false;
+    else if (field == 'pass')
+      this.userFldsVlds.pass = false;
+    else if (field == 'conPass')
+      this.userFldsVlds.conPass = false;
     else if (field == 'cardname')
       this.billfldsVld.name = false;
     else if (field == 'cardnumber')
@@ -107,6 +131,26 @@ export class PlanComponent implements OnInit {
       if (!check)
         check = true;
     }
+    if (this.user.pass == '') {
+      this.userFldsVlds.pass = true;
+      if (!check)
+        check = true;
+    }
+    if (this.user.conPass == '' || this.user.conPass.length < 8) {
+      this.userFldsVlds.conPass = true;
+      if (!check)
+        check = true;
+    }
+    if (this.user.pass != this.user.conPass) {
+      this.userFldsVlds.pass = true;
+      this.userFldsVlds.conPass = true;
+      this.aux.showAlert("Passwords don't match.", "ERROR");
+      return;
+    }
+    if (!this.aux.validate_email(this.user.email)) {
+      this.userFldsVlds.email = true;
+      this.aux.showAlert("Please enter a valid email address.", "ERROR");
+    }
     if (check) {
       this.aux.showAlert("Please don't leave any field blank.", "ERROR");
       return;
@@ -117,11 +161,14 @@ export class PlanComponent implements OnInit {
       zip: this.user.zipcode,
       email: this.user.email,
       phone: this.user.phoneNo,
-      package: this.selectedPlan._id
+      package: this.selectedPlan.plan.name,
+      pwd: this.user.pass,
+      conf_pwd: this.user.conPass
     }
+    params['service_provider'] = this.selectedPlan.provider._id;
+    console.log(params);
     this.auth.signUp(params).subscribe((user) => {
-      this.hasSignedUp = true;
-      this.selectedTab = 1;
+      this.aux.showAlert("Please check your email for completing furthur steps.", "Successfully Registered!!")
     }, (error) => {
       this.aux.errorResponse(error);
     })

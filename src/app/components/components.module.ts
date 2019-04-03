@@ -8,6 +8,7 @@ import { FabComponent } from './fab/fab.component';
 import { AlitaComponent } from './alita/alita.component';
 import { ManualComponent } from './manual/manual.component';
 import { FormsModule } from '@angular/forms';
+import { ProDetailsComponent } from './modals/pro-details/pro-details.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     AlertComponent,
     FabComponent,
     AlitaComponent,
-    ManualComponent
+    ManualComponent,
+    ProDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -29,8 +31,12 @@ import { FormsModule } from '@angular/forms';
     AlertComponent,
     FabComponent,
     AlitaComponent,
-    ManualComponent
+    ManualComponent,
+    ProDetailsComponent
   ],
-  entryComponents: [AlertComponent]
+  entryComponents: [
+    AlertComponent,
+    ProDetailsComponent
+  ]
 })
 export class ComponentsModule { }

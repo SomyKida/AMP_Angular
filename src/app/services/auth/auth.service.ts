@@ -7,11 +7,11 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-
+  public providers = [];
   constructor(public http: Http, public constants: ConstantsService) { }
 
   signUp(params) {
-    var url = this.constants.API_ENDPOINT + '/api/dentist/auth/v2/register';
+    var url = this.constants.API_ENDPOINT + '/api/dentist/auth/v3/register';
     var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
     return response;
   }
@@ -36,6 +36,18 @@ export class AuthService {
 
   setupDentist(params) {
     var url = this.constants.API_ENDPOINT + '/api/dentist/auth/v2/setup';
+    var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
+    return response;
+  }
+
+  serviceProviders() {
+    var url = this.constants.API_ENDPOINT + '/api/system/get-services';
+    var response = this.http.get(url).pipe(map(res => res.json()));
+    return response;
+  }
+
+  addProvider(params) {
+    var url = this.constants.API_ENDPOINT + '/api/system/add-service';
     var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
     return response;
   }

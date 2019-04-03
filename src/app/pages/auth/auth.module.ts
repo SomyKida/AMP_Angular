@@ -15,6 +15,10 @@ import { MaterialModule } from 'src/app/components/material/material.module';
       {
         path: '',
         component: PlanComponent
+      },
+      {
+        path: ':token',
+        component: PlanComponent
       }
     ]),
     CommonModule,

@@ -19,4 +19,9 @@ export class AuxService {
     var message = JSON.parse(error._body);
     this.showAlert(message.errorMessage, "ERROR");
   }
+
+  validate_email(email) {
+    var format = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+    return (email.match(format));
+  }
 }
