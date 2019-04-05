@@ -50,10 +50,9 @@ export class InterceptedHttp extends Http {
         if (options.headers == null) {
             options.headers = new Headers();
         }
-        options.headers.append('app_key', 'MdeDKSXifoYhQZYpEvh+Eol2PvuPWBuL7rVjaHRO7j0=');
         var _token = localStorage.getItem('token');
         if (_token)
-            options.headers.set('session_token', _token);
+            options.headers.set('Authorization', _token);
 
         options.headers.set("Cache-Control", "no-cache");
 

@@ -16,7 +16,8 @@
 
 <mat-dialog-actions>
   <div class="field" *ngIf="listed == false">
-    <input [(ngModel)]="newProvider" name="provider" type="text" placeholder="Name of software in use">
+    <input [(ngModel)]="provider.newProvider" name="provider" type="text" placeholder="Name of software in use">
+    <input [(ngModel)]="provider.email" name="provider" type="email" placeholder="Enter you email">
     <button mat-button class="dimiss" (click)="add()">Save</button>
   </div>
   <button mat-button class="dimiss" (click)="notListed()" *ngIf="listed == true">Not in the list?</button>

@@ -46,8 +46,14 @@ export class AuthService {
     return response;
   }
 
-  addProvider(params) {
-    var url = this.constants.API_ENDPOINT + '/api/system/add-service';
+  requestProvider(params) {
+    var url = this.constants.API_ENDPOINT + '/api/system/add-service-request';
+    var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
+    return response;
+  }
+
+  authenticateToken(params) {
+    var url = this.constants.API_ENDPOINT + '/api/dentist/auth/authenticate-token';
     var response = this.http.post(url, params, {}).pipe(map(res => res.json()));
     return response;
   }

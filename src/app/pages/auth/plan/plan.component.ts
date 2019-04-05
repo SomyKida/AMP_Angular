@@ -38,6 +38,7 @@ export class PlanComponent implements OnInit {
     pass: false,
     conPass: false
   }
+  public wait: boolean = false;
   public billing: { name: string, number: string, cvc: string, expiry: any } = {
     name: '',
     number: '',
@@ -58,11 +59,27 @@ export class PlanComponent implements OnInit {
   ngOnInit() {
     this.userFromUrl = this.extractor.snapshot.paramMap.get('token');
     if (this.userFromUrl) {
-      this.selectedPlan = {
-        message: 'User has already signed up, So no need to worry for plan'
+      this.wait = true;
+      var params = {
+        token: this.userFromUrl
       }
-      this.hasSignedUp = true;
-      this.selectedTab = 1;
+      this.auth.authenticateToken(params).subscribe((success) => {
+        localStorage.setItem('token', success.data.access_token);
+        this.wait = false;
+        this.user = success.data;
+        this.selectedPlan = {
+          plan: {
+            name: success.data.package
+          },
+          message: 'User has already signed up, So no need to worry for plan'
+        }
+        this.hasSignedUp = true;
+        this.selectedTab = 1;
+      }, (error) => {
+        this.wait = false;
+        this.aux.errorResponse(error);
+      })
+
     }
   }
 
@@ -136,7 +153,7 @@ export class PlanComponent implements OnInit {
       if (!check)
         check = true;
     }
-    if (this.user.conPass == '' || this.user.conPass.length < 8) {
+    if (this.user.conPass == '') {
       this.userFldsVlds.conPass = true;
       if (!check)
         check = true;
@@ -147,9 +164,16 @@ export class PlanComponent implements OnInit {
       this.aux.showAlert("Passwords don't match.", "ERROR");
       return;
     }
+    if (this.user.pass.length < 8 || this.user.conPass.length < 8) {
+      this.userFldsVlds.pass = true;
+      this.userFldsVlds.conPass = true;
+      this.aux.showAlert("Password must be atleast 8 characters long.", "ERROR");
+      return;
+    }
     if (!this.aux.validate_email(this.user.email)) {
       this.userFldsVlds.email = true;
       this.aux.showAlert("Please enter a valid email address.", "ERROR");
+      return;
     }
     if (check) {
       this.aux.showAlert("Please don't leave any field blank.", "ERROR");
@@ -166,7 +190,6 @@ export class PlanComponent implements OnInit {
       conf_pwd: this.user.conPass
     }
     params['service_provider'] = this.selectedPlan.provider._id;
-    console.log(params);
     this.auth.signUp(params).subscribe((user) => {
       this.aux.showAlert("Please check your email for completing furthur steps.", "Successfully Registered!!")
     }, (error) => {
@@ -194,6 +217,16 @@ export class PlanComponent implements OnInit {
       this.billfldsVld.cvc = true;
       if (!check)
         check = true;
+    }
+    if (this.billing.number.toString().length < 16) {
+      this.billfldsVld.number = true;
+      this.aux.showAlert("Incorrect card number", "ERROR");
+      return;
+    }
+    if (this.billing.cvc.toString().length < 3 || this.billing.cvc.toString().length > 4) {
+      this.billfldsVld.cvc = true;
+      this.aux.showAlert("Incorrect CVC", "ERROR");
+      return;
     }
     if (check) {
       this.aux.showAlert("Please don't leave any field blank.", "ERROR");

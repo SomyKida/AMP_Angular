@@ -36,7 +36,7 @@ export class OffersComponent implements OnInit {
   }
 
   proPackage() {
-    const dialogRef = this.dialog.open(ProDetailsComponent, {});
+    const dialogRef = this.dialog.open(ProDetailsComponent, { disableClose: true });
     dialogRef.afterClosed().subscribe((provider) => {
       if (provider)
         this.selectedPlan.emit({ plan: this.packages[1], provider: provider });

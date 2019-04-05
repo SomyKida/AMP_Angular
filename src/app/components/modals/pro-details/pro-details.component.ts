@@ -12,6 +12,10 @@ import { AuxService } from 'src/app/auxilaries/aux.service';
 export class ProDetailsComponent implements OnInit {
   public wait: boolean = true;
   public listed: boolean = true;
+  public provider = {
+    newProvider: '',
+    email: ''
+  }
   public newProvider = '';
   public providers = [];
   constructor(@Inject(MAT_DIALOG_DATA) data,
@@ -29,8 +33,10 @@ export class ProDetailsComponent implements OnInit {
         this.wait = false;
         this.aux.errorResponse(error);
       })
-    else
+    else {
+      this.wait = false;
       this.providers = this.auth.providers;
+    }
   }
 
   notListed() {
@@ -38,14 +44,19 @@ export class ProDetailsComponent implements OnInit {
   }
 
   add() {
-    var params = {
-      name: this.newProvider
+    if (this.provider.newProvider != '' && this.provider.email != '') {
+      var params = {
+        name: this.provider.newProvider,
+        email: this.provider.email
+      }
+      this.auth.requestProvider(params).subscribe(() => {
+        this.dialogRef.close(null);
+      }, (error) => {
+        this.aux.errorResponse(error);
+      })
+    } else {
+      this.aux.showAlert("Please, don't leave any field blank", 'ERROR');
     }
-    this.auth.addProvider(params).subscribe(() => {
-      this.dialogRef.close(null);
-    }, (error) => {
-      this.aux.errorResponse(error);
-    })
   }
 
   thisIs(provider) {
