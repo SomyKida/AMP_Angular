@@ -194,6 +194,7 @@ export class PlanComponent implements OnInit {
     this.auth.signUp(params).subscribe((success) => {
       // this.aux.showAlert("Please check your email for completing furthur steps.", "Successfully Registered!!")
       localStorage.setItem('token', success.data.access_token);
+      localStorage.setItem('user', JSON.stringify(success.data));
       this.user = success.data;
       this.hasSignedUp = true;
       this.selectedTab = 1;
